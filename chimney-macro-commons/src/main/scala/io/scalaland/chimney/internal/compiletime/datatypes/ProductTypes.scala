@@ -115,6 +115,7 @@ trait ProductTypes { this: Definitions =>
 
     // defaults methods are 1-indexed
     protected def caseClassApplyDefaultScala2(idx: Int): String = "apply$default$" + idx
+    protected def caseClassApplyDefaultScala2WithMacro(idx: Int): String = "<init>$default$" + idx
     protected def caseClassApplyDefaultScala3(idx: Int): String = "$lessinit$greater$default$" + idx
 
     // skipping on setter should not create a invalid expression, whether or not is should be called depends on caller

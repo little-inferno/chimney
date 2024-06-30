@@ -125,12 +125,14 @@ trait ProductTypesPlatform extends ProductTypes { this: DefinitionsPlatform =>
         val defaultValues = paramss.flatten.zipWithIndex.collect {
           case (param, idx) if param.asTerm.isParamWithDefault =>
             val scala2default = caseClassApplyDefaultScala2(idx + 1)
+            val scala2defaultWithMacro = caseClassApplyDefaultScala2WithMacro(idx + 1)
             val scala3default = caseClassApplyDefaultScala3(idx + 1)
             val foundDefault = companion.typeSignature.decls
               .to(List)
               .collectFirst {
-                case method if getDecodedName(method) == scala2default => TermName(scala2default)
-                case method if getDecodedName(method) == scala3default => TermName(scala3default)
+                case method if getDecodedName(method) == scala2default          => TermName(scala2default)
+                case method if getDecodedName(method) == scala2defaultWithMacro => TermName(scala2default)
+                case method if getDecodedName(method) == scala3default          => TermName(scala3default)
               }
               .getOrElse(
                 assertionFailed(
